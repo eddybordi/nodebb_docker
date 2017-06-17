@@ -6,4 +6,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-- bumped to nodebb 1.4.2
+- bumped to nodebb 1.5.1
+- bumped to nodejs 8.1.2 image

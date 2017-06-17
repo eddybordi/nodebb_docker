@@ -14,7 +14,7 @@ sudo docker-compose up
 ### With docker run : 
 If you already have a mongo db instance running, edit nodebb.env and run with :
 ```
-sudo docker run --env-file=./nodebb.env -ti digitallumberjack/docker-nodebb:latest
+sudo docker run --env-file=./nodebb.env -ti registry.gitlab.com/recalbox/ops/nodebb/nodebb:latest
 ```
 
 ### Environment variables : 
