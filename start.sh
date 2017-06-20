@@ -6,6 +6,25 @@ if [ ! -f /opt/nodebb/.stamp_installed ];then
   echo "creating ssmtp configuration"
   envsubst < /etc/ssmtp/ssmtp.conf.template > /etc/ssmtp/ssmtp.conf || (echo "Unable to create ssmtp configuration" && exit 1)
   echo "creating nodebb config.json"
+  if [[ "$MONGO_HOST" == *"/"* && "$MONGO_EXPAND" == "1" ]]; then
+    EXPANDED_HOSTS=""
+    EXPANDED_PORTS=""
+    if [[ "$MONGO_HOST" == *"/"* ]]; then
+    args=(${MONGO_HOST//// })
+    EXPANDED_HOSTS="${args[0]}/"
+    domains="${args[1]}"
+    domainnames=(${domains//,/ })
+    for domain in ${domainnames[@]}; do
+      addresses="$(nslookup $domain | sed -En 's|Address: (.*)|\1|p')"
+      for address in $addresses; do
+        EXPANDED_HOSTS="${EXPANDED_HOSTS}$address,"
+        EXPANDED_PORTS="${EXPANDED_PORTS}$MONGO_PORT,"
+      done
+    done
+    fi
+    MONGO_HOST="${EXPANDED_HOSTS}"
+    MONGO_PORT="${EXPANDED_PORTS}"
+  fi
   envsubst < /opt/nodebb/config.json.template > /opt/nodebb/config.json || (echo "Unable to create nodebb config.json" && exit 1)
   /usr/local/bin/install-plugins.sh ${NODEBB_PLUGINLIST}
   modulesToActivate=`cat /usr/share/modulesToActivate`
