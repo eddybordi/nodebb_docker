@@ -1,5 +1,5 @@
 FROM node:4.4
-ARG NODEBB_VERSION=v1.4.2
+ARG NODEBB_VERSION=v1.4.6
 ARG NODEBB_BUILD_PLUGINLIST
 
 ENV NODE_ENV=production \
@@ -32,7 +32,7 @@ ENV AWS_SECRET_ACCESS_KEY ''
 ENV S3_UPLOADS_BUCKET ''
 ENV S3_UPLOADS_HOST ''
 
-RUN apt-get update && apt-get install -y gettext-base ssmtp
+RUN apt-get update && apt-get install -y gettext-base ssmtp dnsutils
 
 WORKDIR /opt/nodebb
 ADD https://github.com/NodeBB/NodeBB/archive/${NODEBB_VERSION}.tar.gz /opt/nodebb.tar.gz

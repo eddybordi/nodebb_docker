@@ -14,7 +14,7 @@ sudo docker-compose up
 ### With docker run : 
 If you already have a mongo db instance running, edit nodebb.env and run with :
 ```
-sudo docker run --env-file=./nodebb.env -ti digitallumberjack/docker-nodebb:latest
+sudo docker run --env-file=./nodebb.env -ti registry.gitlab.com/recalbox/ops/nodebb/nodebb:latest
 ```
 
 ### Environment variables : 
@@ -25,7 +25,8 @@ sudo docker run --env-file=./nodebb.env -ti digitallumberjack/docker-nodebb:late
 * NODEBB_WEBSOCKETONLY= (true or false)
 * NODEBB_AUTO_UPGRADE= (true or false)
 * MONGO_HOST=mongo (ip or hostname of mongo master, separated by "," for replica)
-* MONGO_PORT=27017 (port of mongo master, separated by "," for replica)
+* MONGO_EXPAND=false (will check the dns entry for hosts in $MONGO_HOST, ad replace them by ips)
+* MONGO_PORT=27017 (port of mongo master, separated by "," for replica. Set only one port when MONGO_EXPAND is set to true)
 * MONGO_USERNAME= (optional)
 * MONGO_PASSWORD= (optional)
 * MONGO_DATABASE= (optional)

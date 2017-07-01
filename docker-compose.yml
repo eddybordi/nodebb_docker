@@ -1,8 +1,10 @@
 mongo:
   image: mongo:3.2
+  ports:
+    - 27017:27017
 
 nodebb:
-  image: digitallumberjack/docker-nodebb:latest
+  image: registry.gitlab.com/recalbox/ops/nodebb/nodebb:latest
   links:
     - mongo:mongo
   env_file:

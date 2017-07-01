@@ -6,6 +6,31 @@ if [ ! -f /opt/nodebb/.stamp_installed ];then
   echo "creating ssmtp configuration"
   envsubst < /etc/ssmtp/ssmtp.conf.template > /etc/ssmtp/ssmtp.conf || (echo "Unable to create ssmtp configuration" && exit 1)
   echo "creating nodebb config.json"
+  if [[ "$MONGO_EXPAND" == "1" ]]; then
+    EXPANDED_HOSTS=""
+    EXPANDED_PORTS=""
+    if [[ "$MONGO_HOST" == *"/"* ]]; then
+      args=(${MONGO_HOST//// })
+      domains="${args[1]}"
+      domainnames=(${domains//,/ })
+    else
+      domainnames=(${MONGO_HOST})
+    fi
+    for domain in ${domainnames[@]}; do
+      addresses=$(host2ips.sh --separator ',' "$domain")
+      EXPANDED_HOSTS="${EXPANDED_HOSTS}$addresses"
+      MUSTSEPARATE=0
+      for i in $(seq 1 $((${#addresses}+1)));do
+        test ${MUSTSEPARATE} -eq 1 && EXPANDED_PORTS="${EXPANDED_PORTS}${SEPARATOR}"
+        EXPANDED_PORTS="${EXPANDED_PORTS}$MONGO_PORT"
+        MUSTSEPARATE=0
+      done
+    done
+    MONGO_HOST="${EXPANDED_HOSTS}"
+    MONGO_PORT="${EXPANDED_PORTS}"
+    echo "Setting MONGO_HOST to ${EXPANDED_HOSTS}"
+    echo "Setting MONGO_PORT to ${EXPANDED_PORTS}"
+  fi
   envsubst < /opt/nodebb/config.json.template > /opt/nodebb/config.json || (echo "Unable to create nodebb config.json" && exit 1)
   /usr/local/bin/install-plugins.sh ${NODEBB_PLUGINLIST}
   modulesToActivate=`cat /usr/share/modulesToActivate`
