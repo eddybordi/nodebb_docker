@@ -33,6 +33,9 @@ if [ ! -f /opt/nodebb/.stamp_installed ];then
   fi
   envsubst < /opt/nodebb/config.json.template > /opt/nodebb/config.json || (echo "Unable to create nodebb config.json" && exit 1)
   /usr/local/bin/install-plugins.sh ${NODEBB_PLUGINLIST}
+  if [[ "${NODEBB_AUTO_UPGRADE}" != "" && "${NODEBB_AUTO_UPGRADE}" != "false" ]];then
+    ./nodebb upgrade
+  fi
   modulesToActivate=`cat /usr/share/modulesToActivate`
   IFS=$OIFS
   node app.js --setup "{\"admin:username\":\"${ADMIN_USERNAME}\",\"admin:password\":\"${ADMIN_PASSWORD}\",\"admin:password:confirm\":\"${ADMIN_PASSWORD}\",\"admin:email\":\"${ADMIN_EMAIL}\"}" --defaultPlugins "[\"nodebb-plugin-composer-default\",\"nodebb-plugin-markdown\",\"nodebb-plugin-mentions\",\"nodebb-widget-essentials\",\"nodebb-rewards-essentials\",\"nodebb-plugin-soundpack-default\",\"nodebb-plugin-emoji-extended\",\"nodebb-plugin-emoji-one\",\"nodebb-plugin-dbsearch\",\"nodebb-plugin-spam-be-gone\"${modulesToActivate}]" || (echo "Unable to install nodebb" && exit 1) 
@@ -43,7 +46,4 @@ if [ ! -f /opt/nodebb/.stamp_installed ];then
   touch /opt/nodebb/.stamp_installed
 fi
 
-if [[ "${NODEBB_AUTO_UPGRADE}" != "" && "${NODEBB_AUTO_UPGRADE}" != "false" ]];then
-  ./nodebb upgrade
-fi
 ./nodebb start
