@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.5.1] - 2016-06-17
+### Added
+- bumped to nodebb 1.5.1
+- bumped to nodejs 8.1.2 image
+
 ## [1.4.6] - 2017-07-01
 ### Changed
 - bumped to nodebb 1.4.6
