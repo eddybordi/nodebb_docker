@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [1.4.6-2] - 2017-07-02
+### Fixed
+- auto upgrade now execute before install
+
 ## [1.4.6] - 2017-07-01
 ### Changed
 - bumped to nodebb 1.4.6

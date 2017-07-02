@@ -32,6 +32,9 @@ if [ ! -f /opt/nodebb/.stamp_installed ];then
     echo "Setting MONGO_PORT to ${EXPANDED_PORTS}"
   fi
   envsubst < /opt/nodebb/config.json.template > /opt/nodebb/config.json || (echo "Unable to create nodebb config.json" && exit 1)
+  if [[ "${NODEBB_AUTO_UPGRADE}" != "" && "${NODEBB_AUTO_UPGRADE}" != "false" ]];then
+    ./nodebb upgrade
+  fi
   /usr/local/bin/install-plugins.sh ${NODEBB_PLUGINLIST}
   modulesToActivate=`cat /usr/share/modulesToActivate`
   IFS=$OIFS
@@ -43,7 +46,5 @@ if [ ! -f /opt/nodebb/.stamp_installed ];then
   touch /opt/nodebb/.stamp_installed
 fi
 
-if [[ "${NODEBB_AUTO_UPGRADE}" != "" && "${NODEBB_AUTO_UPGRADE}" != "false" ]];then
-  ./nodebb upgrade
-fi
+
 ./nodebb start
