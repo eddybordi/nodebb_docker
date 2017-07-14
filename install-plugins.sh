@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 for module in $@;do
   echo "installing $module"
   npm install "$module" || (echo "Unable to install $module" && exit 1)
