@@ -13,7 +13,7 @@ build:
   script:
   - docker build -t ${IMAGE} .
   - docker push ${IMAGE}
-  - docker build -t ${IMAGEWITHPLUGINS} --build-arg NODEBB_BUILD_PLUGINLIST="
+  - docker build --no-cache -t ${IMAGEWITHPLUGINS} --build-arg NODEBB_BUILD_PLUGINLIST="
     nodebb-plugin-s3-uploads-updated@0.3.15
     nodebb-plugin-gravatar@2.0.4
     nodebb-plugin-topic-tags@0.1.3

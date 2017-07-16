@@ -6,7 +6,7 @@ if [ ! -f /opt/nodebb/.stamp_installed ];then
   echo "creating ssmtp configuration"
   envsubst < /etc/ssmtp/ssmtp.conf.template > /etc/ssmtp/ssmtp.conf || (echo "Unable to create ssmtp configuration" && exit 1)
   echo "creating nodebb config.json"
-  if [[ "$MONGO_EXPAND" == "1" ]]; then
+  if [[ "$MONGO_EXPAND" == "true" ]]; then
     EXPANDED_HOSTS=""
     EXPANDED_PORTS=""
     if [[ "$MONGO_HOST" == *"/"* ]]; then

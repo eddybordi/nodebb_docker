@@ -1,5 +1,5 @@
 FROM node:8.1.2
-ARG NODEBB_VERSION=v1.5.1
+ARG NODEBB_VERSION=v1.5.2
 ARG NODEBB_BUILD_PLUGINLIST
 
 ENV NODE_ENV=production \
@@ -35,7 +35,7 @@ ENV S3_UPLOADS_HOST ''
 RUN apt-get update && apt-get install -y gettext-base ssmtp dnsutils
 
 WORKDIR /opt/nodebb
-ADD https://github.com/NodeBB/NodeBB/archive/${NODEBB_VERSION}.tar.gz /opt/nodebb.tar.gz
+RUN curl -L https://github.com/NodeBB/NodeBB/archive/${NODEBB_VERSION}.tar.gz >> /opt/nodebb.tar.gz
 RUN tar xvzf /opt/nodebb.tar.gz -C /opt/nodebb --strip 1
 ADD start.sh /usr/local/bin/start.sh
 ADD install-plugins.sh /usr/local/bin/install-plugins.sh
