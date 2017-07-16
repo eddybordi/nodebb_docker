@@ -20,10 +20,12 @@ if [ ! -f /opt/nodebb/.stamp_installed ];then
       addresses=$(host2ips.sh --separator ',' "$domain")
       EXPANDED_HOSTS="${EXPANDED_HOSTS}$addresses"
       MUSTSEPARATE=0
-      for i in $(seq 1 $((${#addresses}+1)));do
+      SEPARATOR=","
+      IFS=',' read -ra ADDR <<< "$addresses"
+      for i in "${ADDR[@]}"; do
         test ${MUSTSEPARATE} -eq 1 && EXPANDED_PORTS="${EXPANDED_PORTS}${SEPARATOR}"
         EXPANDED_PORTS="${EXPANDED_PORTS}$MONGO_PORT"
-        MUSTSEPARATE=0
+        MUSTSEPARATE=1
       done
     done
     MONGO_HOST="${EXPANDED_HOSTS}"
