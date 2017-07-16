@@ -37,8 +37,7 @@ RUN apt-get update && apt-get install -y gettext-base ssmtp dnsutils
 WORKDIR /opt/nodebb
 RUN curl -L https://github.com/NodeBB/NodeBB/archive/${NODEBB_VERSION}.tar.gz >> /opt/nodebb.tar.gz
 RUN tar xvzf /opt/nodebb.tar.gz -C /opt/nodebb --strip 1
-ADD start.sh /usr/local/bin/start.sh
-ADD install-plugins.sh /usr/local/bin/install-plugins.sh
+ADD bin/ /usr/local/bin/
 ADD conf/config.json.template /opt/nodebb/config.json.template
 ADD conf/ssmtp.conf.template /etc/ssmtp/ssmtp.conf.template
 
