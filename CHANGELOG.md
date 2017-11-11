@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+### Fixed
+- bumped to nodebb v1.6.1
 
 ## [1.5.2-1] - 2016-07-16
 ### Fixed
